@@ -1,0 +1,48 @@
+.toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition:
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out);
+}
+
+.toggle:hover {
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.toDark,
+.toLight {
+  display: contents;
+}
+
+.toLight {
+  display: none;
+}
+
+:root[data-theme='dark'] .toDark {
+  display: none;
+}
+
+:root[data-theme='dark'] .toLight {
+  display: contents;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .toDark {
+    display: none;
+  }
+
+  :root:not([data-theme='light']) .toLight {
+    display: contents;
+  }
+}

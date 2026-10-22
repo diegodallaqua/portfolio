@@ -1,0 +1,153 @@
+.hero {
+  display: grid;
+  gap: var(--space-7);
+  padding-block: var(--space-5) var(--space-9);
+}
+
+.hero .record {
+  --reach: 1.22;
+}
+
+/* ---------- Capa ---------- */
+
+.cover {
+  position: relative;
+  height: 100%;
+  padding: 7cqi;
+}
+
+.coverTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  font-weight: 700;
+}
+
+.coverName {
+  font-size: clamp(0.9375rem, 3.9cqi, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.coverWords {
+  font-size: 17.5cqi;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+}
+
+.dots {
+  position: absolute;
+  top: 7.6cqi;
+  right: 7cqi;
+  font-size: 6cqi;
+}
+
+/* ---------- Verso: ficha e faixas ---------- */
+
+.notes {
+  display: grid;
+  align-content: start;
+}
+
+.role {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.where {
+  margin-top: var(--space-1);
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+.bio {
+  max-width: 44ch;
+  margin-top: var(--space-4);
+  color: var(--ink-2);
+}
+
+.tracksTitle {
+  margin-top: var(--space-6);
+  padding-block: var(--space-3);
+  border-bottom: 1.5px solid var(--ink);
+  font-size: var(--fs-fine);
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: lowercase;
+}
+
+.track {
+  display: grid;
+  grid-template-columns: 1.5em minmax(0, 1fr) auto;
+  grid-template-areas:
+    'no name arrow'
+    'no stack arrow';
+  align-items: center;
+  column-gap: var(--space-3);
+  min-height: 60px;
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+
+.trackNo {
+  grid-area: no;
+  align-self: start;
+  color: var(--ink-3);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.trackName {
+  grid-area: name;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.trackStack {
+  grid-area: stack;
+  color: var(--ink-2);
+  font-size: var(--fs-small);
+}
+
+.track :global(.arrow) {
+  grid-area: arrow;
+  color: var(--ink-3);
+}
+
+.track:hover .trackName {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.track:hover .trackNo,
+.track:hover :global(.arrow) {
+  color: var(--red);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 1080px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+    align-items: center;
+    gap: var(--space-8);
+    padding-block: var(--space-4) var(--space-8);
+  }
+
+  .hero .record {
+    --reach: 1.5;
+    /* A capa inteira cabe na primeira tela de um notebook. */
+    max-width: calc((100svh - 150px) * 1.5);
+  }
+}

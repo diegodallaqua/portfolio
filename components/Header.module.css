@@ -1,0 +1,95 @@
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'brand tools'
+    'nav nav';
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  padding-block: var(--space-4) var(--space-3);
+}
+
+.brand {
+  grid-area: brand;
+  display: grid;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.name {
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.nav {
+  grid-area: nav;
+}
+
+.nav ul {
+  display: flex;
+  gap: var(--space-5);
+}
+
+.nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  min-height: 44px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+/* Só a seção atual ganha o ponto vermelho. */
+.nav a[aria-current]::before {
+  content: '';
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--seal);
+}
+
+.tools {
+  grid-area: tools;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.lang {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  font-size: var(--fs-fine);
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out);
+}
+
+.lang:hover {
+  background: var(--ink);
+  color: var(--ground);
+}
+
+@media (min-width: 900px) {
+  .header {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas: 'brand nav tools';
+    gap: var(--space-6);
+    padding-block: var(--space-5);
+  }
+
+  .nav ul {
+    gap: var(--space-6);
+  }
+}

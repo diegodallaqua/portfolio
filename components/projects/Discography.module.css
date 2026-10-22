@@ -1,0 +1,260 @@
+.section {
+  padding-block: var(--space-9) var(--space-9);
+}
+
+.head {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.title {
+  max-width: 12ch;
+  font-size: var(--fs-h2);
+}
+
+.titleLarge {
+  max-width: 12ch;
+  font-size: var(--fs-display);
+}
+
+.intro {
+  max-width: 40ch;
+  color: var(--ink-2);
+  font-size: var(--fs-lead);
+  line-height: 1.45;
+}
+
+@media (min-width: 900px) {
+  .head {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: end;
+    gap: var(--space-8);
+  }
+}
+
+/* ---------- Seletor de lado ---------- */
+
+/* Faixa da cor da mesa atrás do seletor fixo: as capas passam por baixo dela. */
+.switchBar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin-top: var(--space-6);
+  margin-inline: calc(-1 * var(--gutter));
+  padding: var(--space-3) var(--gutter);
+  background: var(--ground);
+}
+
+.switch {
+  display: flex;
+  width: fit-content;
+  padding: 4px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--ground);
+  box-shadow: 0 10px 28px -16px rgba(0, 0, 0, 0.45);
+}
+
+.switch label {
+  position: relative;
+  cursor: pointer;
+}
+
+.switch input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.switch span {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    background-color 260ms var(--ease-out),
+    color 260ms var(--ease-out);
+}
+
+.switch b {
+  font-weight: 700;
+}
+
+.switch span::before {
+  content: '';
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.35;
+}
+
+.switch label:hover span {
+  color: var(--ink);
+}
+
+.switch input:checked + span {
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.switch input:checked + span::before {
+  background: var(--seal);
+  opacity: 1;
+}
+
+.switch input:focus-visible + span {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+/* ---------- Discos ---------- */
+
+.list {
+  display: grid;
+  gap: var(--space-9);
+  margin-top: var(--space-7);
+}
+
+.row {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.row .record {
+  --reach: 1.2;
+}
+
+.info {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-4);
+}
+
+.name {
+  font-size: var(--fs-h3);
+}
+
+.name a {
+  text-decoration: none;
+}
+
+.name a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.12em;
+}
+
+.kind {
+  font-size: var(--fs-lead);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.summary {
+  max-width: 46ch;
+  color: var(--ink-2);
+}
+
+.sides {
+  display: grid;
+  width: 100%;
+  max-width: 46ch;
+  margin-block: var(--space-2) var(--space-3);
+  border-top: 1.5px solid var(--ink);
+}
+
+.sides div {
+  display: grid;
+  gap: 2px;
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--rule);
+  transition: color 300ms var(--ease-out);
+}
+
+.sides dt {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: var(--fs-fine);
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.sides dt::before {
+  content: '';
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  transition:
+    background-color 300ms var(--ease-out),
+    border-color 300ms var(--ease-out);
+}
+
+.sides dd {
+  font-size: var(--fs-small);
+}
+
+/* O lado que está tocando ganha o ponto vermelho; o outro recua. */
+.sides [data-side='a'] dt::before {
+  border-color: var(--seal);
+  background: var(--seal);
+}
+
+.sides [data-side='b'] {
+  color: var(--ink-3);
+}
+
+:global([data-records]:has(input[value='b']:checked)) .sides [data-side='a'] {
+  color: var(--ink-3);
+}
+
+:global([data-records]:has(input[value='b']:checked)) .sides [data-side='a'] dt::before {
+  border-color: currentColor;
+  background: transparent;
+}
+
+:global([data-records]:has(input[value='b']:checked)) .sides [data-side='b'] {
+  color: var(--ink);
+}
+
+:global([data-records]:has(input[value='b']:checked)) .sides [data-side='b'] dt::before {
+  border-color: var(--seal);
+  background: var(--seal);
+}
+
+@media (min-width: 1080px) {
+  .section {
+    padding-block: var(--space-9) var(--space-10);
+  }
+
+  .list {
+    gap: var(--space-10);
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .item[data-mirror] .row {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .item[data-mirror] .record {
+    order: 2;
+  }
+
+  .row .record {
+    --reach: 1.45;
+  }
+}

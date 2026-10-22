@@ -1,0 +1,98 @@
+/* Painel em tinta cheia: preto no tema claro, papel claro no escuro. */
+.panel {
+  position: relative;
+  display: grid;
+  gap: var(--space-7);
+  padding: var(--space-7) var(--space-5) var(--space-6);
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.title {
+  font-size: var(--fs-h2);
+}
+
+.lead {
+  max-width: 34ch;
+  margin-top: var(--space-4);
+  font-size: var(--fs-lead);
+  opacity: 0.82;
+}
+
+.reach {
+  display: grid;
+  justify-items: start;
+  align-content: end;
+  gap: var(--space-3);
+}
+
+.label {
+  font-size: var(--fs-fine);
+  font-weight: 600;
+  text-transform: lowercase;
+  opacity: 0.82;
+}
+
+.email {
+  max-width: 100%;
+  font-size: clamp(1.25rem, 3.2vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+
+.email:hover {
+  text-decoration-color: var(--seal);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin-top: var(--space-2);
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+.where {
+  font-size: var(--fs-small);
+  opacity: 0.82;
+}
+
+.dots {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-5);
+  font-size: 1rem;
+}
+
+.panel :focus-visible {
+  outline-color: var(--seal);
+}
+
+@media (min-width: 900px) {
+  .panel {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding: var(--space-8) var(--space-7);
+  }
+
+  .dots {
+    top: var(--space-8);
+    right: var(--space-7);
+    font-size: 1.25rem;
+  }
+}

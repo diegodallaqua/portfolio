@@ -1,0 +1,193 @@
+/*
+ * Um LP: capa quadrada por cima e o disco atrás, saindo pela lateral.
+ * --reach é a largura total dividida pela largura da capa.
+ */
+.record {
+  --reach: 1.5;
+  --dir: 1;
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--reach) / 1;
+  isolation: isolate;
+  container-type: inline-size;
+}
+
+.record[data-mirror] {
+  --dir: -1;
+}
+
+/* ---------- Capa ---------- */
+
+.sleeve {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: calc(100% / var(--reach));
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  container-type: inline-size;
+}
+
+.record[data-mirror] .sleeve {
+  left: auto;
+  right: 0;
+}
+
+.pane {
+  position: absolute;
+  inset: 0;
+  transition:
+    clip-path 620ms var(--ease-turn),
+    visibility 0s linear 0s;
+}
+
+.pane[data-side='b'] {
+  visibility: hidden;
+  clip-path: inset(0 0 0 100%);
+  transition:
+    clip-path 620ms var(--ease-turn),
+    visibility 0s linear 620ms;
+}
+
+.record[data-mirror] .pane[data-side='b'] {
+  clip-path: inset(0 100% 0 0);
+}
+
+/* Seletor de lado da seção: lado B vira todos os discos e troca as capas. */
+:global([data-records]:has(input[value='b']:checked)) .record[data-sided] .pane[data-side='b'] {
+  visibility: visible;
+  clip-path: inset(0);
+  transition:
+    clip-path 620ms var(--ease-turn),
+    visibility 0s linear 0s;
+}
+
+:global([data-records]:has(input[value='b']:checked)) .record[data-sided] .pane[data-side='a'] {
+  visibility: hidden;
+  transition:
+    clip-path 620ms var(--ease-turn),
+    visibility 0s linear 620ms;
+}
+
+:global([data-records]:has(input[value='b']:checked)) .record[data-sided] .turn {
+  transform: rotateY(180deg);
+}
+
+/* ---------- Disco ---------- */
+
+.disc {
+  position: absolute;
+  top: 3%;
+  left: calc(99% - 94% / var(--reach));
+  height: 94%;
+  aspect-ratio: 1;
+  perspective: 1800px;
+}
+
+.record[data-mirror] .disc {
+  left: 1%;
+}
+
+.turn {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 900ms var(--ease-turn);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  /* Furo central, anel do selo, reflexo parado e os sulcos. */
+  background:
+    radial-gradient(circle, var(--ground) 0 1.4%, transparent 1.6%),
+    radial-gradient(circle, transparent 0 35.4%, rgba(255, 255, 255, 0.06) 35.6% 36.2%, transparent 36.4%),
+    conic-gradient(
+      from 24deg,
+      transparent 0deg,
+      var(--sheen) 20deg,
+      transparent 44deg,
+      transparent 180deg,
+      var(--sheen) 200deg,
+      transparent 224deg
+    ),
+    repeating-radial-gradient(circle, var(--vinyl) 0 2px, var(--groove) 2px 3px);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.05),
+    0 16px 40px -24px rgba(0, 0, 0, 0.7);
+}
+
+.face[data-reverse] {
+  transform: rotateY(180deg);
+}
+
+.spin {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  animation: spin 3.6s linear infinite paused;
+}
+
+.record:hover .spin,
+.record:focus-within .spin {
+  animation-play-state: running;
+}
+
+.seal {
+  position: relative;
+  width: 34%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  /* Furo no meio do selo. */
+  background: radial-gradient(circle, var(--ground) 0 4.2%, transparent 4.6%), var(--seal);
+  color: var(--on-red);
+  text-align: center;
+}
+
+/* A letra fica na metade do selo que sai da capa. */
+.sealLetter {
+  position: absolute;
+  top: 50%;
+  right: 13%;
+  font-size: clamp(1rem, 4.4cqi, 2.75rem);
+  font-weight: 700;
+  line-height: 1;
+  transform: translateY(-52%);
+}
+
+.record[data-mirror] .sealLetter {
+  right: auto;
+  left: 13%;
+}
+
+/* A captura em preto e branco ganha cor quando o disco toca. */
+.record:hover :global(img[data-mono]),
+.record:focus-within :global(img[data-mono]) {
+  filter: none;
+}
+
+/* ---------- Entrada ---------- */
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(calc(var(--dir) * -54%));
+  }
+}
+
+.record[data-entrance='load'] .disc {
+  animation: slide 1400ms var(--ease-out) 200ms both;
+}
+

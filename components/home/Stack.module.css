@@ -1,0 +1,102 @@
+.section {
+  display: grid;
+  gap: var(--space-7);
+  padding-block: var(--space-9);
+  /* Régua do tamanho do conteúdo, sem invadir a margem lateral. */
+  background: linear-gradient(var(--ink) 0 0) top center / calc(100% - 2 * var(--gutter)) 1.5px no-repeat;
+}
+
+.head {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.title {
+  font-size: var(--fs-h2);
+}
+
+.intro {
+  max-width: 40ch;
+  color: var(--ink-2);
+  font-size: var(--fs-lead);
+}
+
+.groups {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.caption {
+  padding-bottom: var(--space-3);
+  border-bottom: 1.5px solid var(--ink);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: left;
+  text-transform: lowercase;
+}
+
+.techHead {
+  width: 44%;
+}
+
+.projectHead {
+  padding: var(--space-3) 2px;
+  color: var(--ink-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.tech {
+  padding-block: 10px;
+  font-size: var(--fs-small);
+  font-weight: 500;
+  text-align: left;
+}
+
+.tech,
+.cell {
+  border-top: 1px solid var(--rule);
+}
+
+.cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--seal);
+  vertical-align: middle;
+}
+
+@media (min-width: 900px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: end;
+    gap: var(--space-8);
+  }
+}
+
+@media (min-width: 1080px) {
+  .section {
+    padding-block: var(--space-10);
+  }
+
+  .groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-7);
+  }
+}

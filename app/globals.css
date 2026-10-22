@@ -1,0 +1,332 @@
+/* Lado A, Lado B: capas de disco brancas, vinil preto, selo vermelho e pontos vermelhos. */
+
+:root {
+  /* Tema claro: a capa impressa sobre a mesa clara. */
+  --ground: #f3f3f0;
+  --paper: #ffffff;
+  --ink: #121212;
+  --ink-2: #464644;
+  --ink-3: #5e5e5b;
+  --rule: #d2d2cd;
+  --rule-2: #a9a9a4;
+  /* Vermelho: selo do disco, pontos e o lado escolhido. */
+  --red: #d42a1f;
+  --on-red: #ffffff;
+  /* Selo do disco: o mesmo vermelho impresso nos dois temas. */
+  --seal: #d42a1f;
+  --vinyl: #0c0c0c;
+  --groove: #1b1b1b;
+  --sheen: rgba(255, 255, 255, 0.1);
+  --shadow: 0 1px 2px rgba(18, 18, 18, 0.08), 0 18px 40px -22px rgba(18, 18, 18, 0.45);
+  --shot-filter: grayscale(1) contrast(1.22);
+
+  --font-sans: var(--font-jost), 'Futura', 'Century Gothic', Arial, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, Consolas, monospace;
+
+  --fs-display: clamp(2.625rem, 8.4vw, 6rem);
+  --fs-h2: clamp(2.5rem, 6vw, 4.75rem);
+  --fs-h3: clamp(1.875rem, 3.4vw, 2.75rem);
+  --fs-lead: clamp(1.125rem, 1.6vw, 1.375rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9375rem;
+  --fs-fine: 0.8125rem;
+  --fs-code: 0.8125rem;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 144px;
+
+  --page: 1280px;
+  --gutter: 16px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-turn: cubic-bezier(0.65, 0, 0.35, 1);
+
+  color-scheme: light;
+}
+
+/* Tema escuro: as capas pretas da Elenco sobre a mesa escura. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --ground: #1c1c1b;
+    --paper: #0b0b0b;
+    --ink: #f2f1ed;
+    --ink-2: #c2c1bc;
+    --ink-3: #9a9994;
+    --rule: #363634;
+    --rule-2: #575754;
+    --red: #f0533f;
+    --on-red: #ffffff;
+    --vinyl: #080808;
+    --groove: #161616;
+    --sheen: rgba(255, 255, 255, 0.12);
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 28px 56px -24px rgba(0, 0, 0, 0.95);
+    --shot-filter: grayscale(1) contrast(1.18) brightness(0.92);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --ground: #1c1c1b;
+  --paper: #0b0b0b;
+  --ink: #f2f1ed;
+  --ink-2: #c2c1bc;
+  --ink-3: #9a9994;
+  --rule: #363634;
+  --rule-2: #575754;
+  --red: #f0533f;
+  --on-red: #ffffff;
+  --vinyl: #080808;
+  --groove: #161616;
+  --sheen: rgba(255, 255, 255, 0.12);
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 28px 56px -24px rgba(0, 0, 0, 0.95);
+  --shot-filter: grayscale(1) contrast(1.18) brightness(0.92);
+  color-scheme: dark;
+}
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+
+@media (min-width: 1080px) {
+  :root {
+    --gutter: 48px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--ground);
+  scrollbar-color: var(--rule-2) var(--ground);
+  scroll-padding-top: var(--space-6);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  caret-color: var(--red);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: tabular-nums;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--seal);
+  color: var(--on-red);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+p,
+li,
+dd {
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* ---------- Página ---------- */
+
+.page {
+  width: 100%;
+  max-width: calc(var(--page) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Títulos de capa: geométrica em caixa baixa, como os discos Elenco. */
+.cover-type {
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 50;
+  padding: var(--space-3) var(--space-4);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--ground);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* Pontos vermelhos: o único ornamento. */
+.dots {
+  display: flex;
+  gap: 0.45em;
+}
+
+.dots i {
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 50%;
+  background: var(--seal);
+}
+
+/* ---------- Ícones ---------- */
+
+.icon {
+  flex: none;
+  width: 1em;
+  height: 1em;
+}
+
+.arrow {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  transition: transform 220ms var(--ease-out);
+}
+
+a:hover > .arrow,
+a:focus-visible > .arrow {
+  transform: translateX(0.18em);
+}
+
+a:hover > .arrow[data-diagonal],
+a:focus-visible > .arrow[data-diagonal] {
+  transform: translate(0.12em, -0.12em);
+}
+
+/* ---------- Botões ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out),
+    transform 160ms var(--ease-out);
+}
+
+.button:hover {
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+/* A ação principal de cada vista: tinta cheia. */
+.button[data-tone='solid'] {
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.button[data-tone='solid']:hover {
+  background: var(--seal);
+  border-color: var(--seal);
+  color: var(--on-red);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

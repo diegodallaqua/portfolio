@@ -1,0 +1,39 @@
+# dependências
+/node_modules
+
+# build
+/.next/
+/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# ambiente
+.env
+.env*.local
+
+# diversos
+.DS_Store
+npm-debug.log*
+.vercel
+
+# LLM, agentes de IA e skills
+.claude/
+.agents/
+.impeccable/
+.cursor/
+.cursorrules
+.windsurf/
+.windsurfrules
+.codex/
+.gemini/
+.aider*
+.continue/
+.github/copilot-instructions.md
+skills-lock.json
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+GEMINI.md
+PRODUCT.md
+DESIGN.md
+instructions.md

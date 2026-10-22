@@ -1,0 +1,74 @@
+.figure {
+  display: grid;
+  min-width: 0;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.figure[data-bare] {
+  border: 0;
+  background: transparent;
+}
+
+.caption {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+  font-size: var(--fs-fine);
+  font-weight: 500;
+}
+
+.pre {
+  overflow: auto;
+  padding: var(--space-4);
+  color: var(--ink);
+  font-size: var(--fs-code);
+  line-height: 1.7;
+  scrollbar-width: thin;
+}
+
+.figure[data-bare] .pre {
+  padding: 0;
+  font-size: inherit;
+}
+
+.line {
+  display: block;
+  min-height: 1.7em;
+}
+
+/* Realce monocromático: peso e tom de tinta, sem paleta. */
+.method,
+.status,
+.num {
+  font-weight: 500;
+}
+
+.method {
+  color: var(--seal);
+}
+
+:root[data-theme='dark'] .method {
+  color: var(--red);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .method {
+    color: var(--red);
+  }
+}
+
+.path,
+.header,
+.key {
+  color: var(--ink);
+}
+
+.str {
+  color: var(--ink-2);
+}
+
+.punct,
+.comment {
+  color: var(--ink-3);
+}
