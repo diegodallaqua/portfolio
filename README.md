@@ -26,25 +26,35 @@ npm run dev        # http://localhost:3000
 | `/projetos` | `/en/projects` | Projetos como discos, com o seletor Lado A (interface) ⇄ Lado B (API) |
 | `/projetos/[slug]` | `/en/projects/[slug]` | Detalhe: capa, Lado A (interface), Lado B (API), capturas, notas |
 
-Cada idioma tem o próprio layout raiz (`app/(pt)` e `app/(en)`), com o `lang` certo no `<html>`. O 404 global fica em `app/global-not-found.tsx`. Sitemap, robots, ícone e imagens Open Graph são gerados no build.
+Cada idioma tem o próprio layout raiz (`app/(pt)` e `app/(en)`), com o `lang` certo no `<html>`. O 404 global fica em `app/global-not-found.tsx`. Sitemap, robots, ícone e imagens Open Graph são gerados no build. Endereços antigos ou trocados de idioma (`/pt`, `/projects`, `/en/projetos`...) redirecionam para a rota certa (`next.config.ts`).
+
+## Estrutura do código
+
+- `app/`: rotas. Cada arquivo de página só escolhe o idioma e chama a vista correspondente.
+- `views/`: as três páginas (início, projetos, projeto), iguais nos dois idiomas.
+- `components/`: o disco (`Record`), as capas, as seções da home e as peças de página de projeto.
+- `content/`: todo o texto e os dados do site (veja abaixo).
+- `lib/`: rotas e âncoras de cada idioma (`i18n.ts`), metadados (`metadata.ts`, `pages.ts`), imagens Open Graph (`og.tsx`), tema (`theme.ts`) e fontes (`fonts.ts`).
 
 ## Onde editar o conteúdo
 
 Todo o texto fica em `content/`, nos dois idiomas:
 
-- `content/profile.ts`: nome, cargo, frase de posicionamento, bio, contatos e a **linha do tempo**.
-- `content/projects.ts`: projetos (resumo, descrição, stack, destaques, repositórios, capturas, amostra de API) e a lista de tecnologias do `stack.json` da home.
+- `content/profile.ts`: nome, cargo, cidade, bio, frase da trajetória, contatos e a **linha do tempo**.
+- `content/projects.ts`: projetos (resumo, descrição, stack, destaques, repositórios, marca da capa, capturas, amostra de API, notas) e a matriz de tecnologias da seção stack da home (`stackMatrix`).
 - `content/dictionary.ts`: textos da interface (menus, títulos, rótulos).
 
-### Preencher a trajetória
+### Linha do tempo
 
-Os itens "Formação" e "Experiência" da linha do tempo estão marcados como **A preencher**. Em `content/profile.ts`, troque `text: null` pelo texto nos dois idiomas e, se quiser, `when: null` pelo período:
+Cada etapa da trajetória é um item de `timeline` em `content/profile.ts`. A última etapa da lista recebe o selo "agora", e `projectSlug` acrescenta o link "Ver projeto".
+
+Para marcar uma etapa que ainda não foi escrita, use `text: null`: ela aparece com a etiqueta tracejada "a preencher" e o texto opcional de `pending`. Para preencher, troque `null` pelo texto nos dois idiomas e, se quiser, `when: null` pelo período:
 
 ```ts
 {
   id: 'formacao',
   label: { pt: 'Formação', en: 'Education' },
-  when: { pt: '2020 – 2024', en: '2020 – 2024' },
+  when: { pt: '2022 – 2026', en: '2022 – 2026' },
   text: {
     pt: 'Bacharelado em ..., Universidade ...',
     en: 'Bachelor of ..., University ...',
@@ -52,14 +62,16 @@ Os itens "Formação" e "Experiência" da linha do tempo estão marcados como **
 },
 ```
 
-O nó tracejado "A preencher" vira um nó normal assim que o texto existe.
+### Marca da capa
 
-### Enviar as capturas dos projetos
+A capa de cada disco mostra a marca do projeto (`mark` em `content/projects.ts`) sobre o preto do vinil. `bleed: true` é para uma arte com fundo próprio, que ocupa a área inteira da capa; `focus` ajusta o recorte (`object-position`). O arquivo vai sem otimização, então exporte já no tamanho final.
 
-Rede Campo Online mostra molduras vazias ("Captura a enviar") até as capturas chegarem. Para cada uma:
+### Capturas dos projetos
 
-1. Salve o arquivo em `public/projects/<slug>/` (PNG, JPG ou WebP; a Vercel converte para AVIF/WebP no tamanho certo).
-   - Desktop: de preferência 1440 × 900 px. A moldura de navegador mostra o topo em 16:10.
+As capturas ficam no encarte da página de cada projeto, em cor. A primeira captura desktop ilustra o Lado A e não se repete no encarte. Uma captura sem `src` aparece como moldura vazia, com a logo do projeto (`logo`) e o aviso "Captura a enviar". Para publicar uma:
+
+1. Salve o arquivo em `public/projects/<slug>/` (PNG, JPG ou WebP). A captura é servida sem otimização, no arquivo original, para manter o texto nítido.
+   - Desktop: de preferência 1440 × 900 px. A moldura mostra o topo em 16:10; capturas mais largas que isso aparecem inteiras.
    - Mobile: 390 × 844 px (ou uma captura de página inteira com 390 px de largura).
 2. Em `content/projects.ts`, no item correspondente de `shots`, preencha `src`, `width`, `height` e `alt`:
 
@@ -78,7 +90,7 @@ As capturas do Pontuo vieram dos testes de navegador do próprio repositório (`
 
 ### Amostras de API
 
-O lado "API" de cada projeto mostra uma requisição e resposta reais, tiradas do README ou do código do repositório (`api` em cada projeto de `content/projects.ts`).
+O Lado B de cada projeto mostra uma requisição e resposta reais, tiradas do README ou do código do repositório (`api` em cada projeto de `content/projects.ts`). A mesma amostra aparece no verso da capa quando o seletor está no Lado B.
 
 ### Repositórios privados
 
@@ -86,7 +98,7 @@ O lado "API" de cada projeto mostra uma requisição e resposta reais, tiradas d
 
 ## Design
 
-Mundo "Lado A, Lado B", das capas da gravadora Elenco: cada projeto é um LP, com a interface no Lado A e a API no Lado B. Capas brancas (pretas no tema escuro), disco de vinil saindo da capa com selo vermelho `#D42A1F`, e pontos vermelhos como único ornamento. Tipografia: Jost em caixa baixa e negrito nos títulos de capa, Jost no texto, JetBrains Mono só em código de verdade. As capturas ficam em preto e branco nas capas e ganham cor ao passar o mouse e na página do projeto. Os tokens (cores dos dois temas, tipografia e espaçamento) ficam em `app/globals.css`.
+Mundo "Lado A, Lado B", das capas da gravadora Elenco: cada projeto é um LP, com a interface no Lado A e a API no Lado B. Capas brancas (pretas no tema escuro), disco de vinil saindo da capa com selo vermelho `#D42A1F`, e pontos vermelhos como único ornamento. Tipografia: Jost em caixa baixa e negrito nos títulos de capa, Jost no texto, JetBrains Mono só em código de verdade. A capa de cada projeto traz a marca dele em preto e branco; as capturas, em cor, ficam só no encarte da página do projeto. Os tokens (cores dos dois temas, tipografia e espaçamento) ficam em `app/globals.css`.
 
 A capa inicial usa a arte original **Curto-circuito**, inspirada em capas de rock: uma ilustração gráfica de dois cabos ligados por um raio, com formas planas e textura de serigrafia em preto, azul, vermelho e branco. A imagem fica em `public/images/curto-circuito.webp`; o nome e “Ponta a ponta.” / “End to End.” são textos HTML brancos sobre a arte nos dois temas. O [prompt de edição](docs/curto-circuito.md) está documentado para futuras variações.
 
@@ -94,10 +106,21 @@ Tema claro e escuro: o botão ao lado do idioma alterna e guarda a escolha no `l
 
 O seletor Lado A ⇄ Lado B vira todos os discos da seção ao mesmo tempo e troca cada capa pela requisição real da API. Funciona só com CSS (`:has()` sobre botões de rádio), sem JavaScript no cliente.
 
+### Movimento
+
+- No carregamento, o disco do topo da página desliza para fora da capa. Ao passar o mouse, o disco gira. Ao trocar de lado, a capa e o disco trocam de posição: o disco passa por trás da capa e sai pelo lado oposto, já virado no selo B (no Lado A ele sai pela direita; no Lado B, pela esquerda; nas linhas espelhadas, o inverso).
+- Ao rolar, os blocos abaixo da dobra sobem e aparecem quando entram na tela, e os discos da discografia saem da capa junto com a linha. Para animar um novo bloco, marque o elemento com o atributo `data-reveal`; o script fica em `components/ScrollReveal.tsx`.
+- Sem JavaScript, na impressão ou com `prefers-reduced-motion: reduce`, nada fica escondido e nenhuma animação roda: a página aparece completa.
+
 ## Deploy na Vercel
 
-1. Importe o repositório na Vercel (framework detectado: Next.js).
-2. Opcional: defina `NEXT_PUBLIC_SITE_URL` com o domínio final (ex.: `https://diegodallaqua.dev`). Sem ela, o site usa a URL de produção da Vercel nos metadados, no sitemap e nas imagens de compartilhamento.
+1. Importe o repositório na Vercel (framework detectado: Next.js). Não é preciso mudar nenhuma configuração.
+2. Opcional: defina `NEXT_PUBLIC_SITE_URL` com o domínio final (ex.: `https://diegodallaqua.dev`). Sem ela, o site usa `VERCEL_PROJECT_PRODUCTION_URL`, que a Vercel preenche com o domínio de produção (o domínio próprio, se houver, ou o `.vercel.app`) nos metadados, no sitemap e nas imagens de compartilhamento. Essas URLs são gravadas no build: depois de adicionar ou trocar o domínio, faça um novo deploy.
+
+Observações:
+
+- `engines.node` no `package.json` aceita qualquer versão a partir da 20.9, então a Vercel usa a mais recente e avisa no build. Para fixar uma versão, troque por `"24.x"`.
+- A Content Security Policy de `next.config.ts` bloqueia os scripts da barra de ferramentas da Vercel (`vercel.live`) nos deploys de preview. A produção não é afetada; para usar comentários nos previews, libere `https://vercel.live` na CSP.
 
 ## Lighthouse
 

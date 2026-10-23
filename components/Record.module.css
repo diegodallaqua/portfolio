@@ -1,10 +1,13 @@
 /*
  * Um LP: capa quadrada por cima e o disco atrás, saindo pela lateral.
- * --reach é a largura total dividida pela largura da capa.
+ * --reach é a largura total dividida pela largura da capa. --dir é o lado
+ * por onde o disco sai no lado A (1 direita, -1 esquerda); --out, o lado
+ * por onde ele sai agora.
  */
 .record {
   --reach: 1.5;
   --dir: 1;
+  --out: var(--dir);
   position: relative;
   width: 100%;
   aspect-ratio: var(--reach) / 1;
@@ -29,6 +32,7 @@
   background: var(--paper);
   box-shadow: var(--shadow);
   container-type: inline-size;
+  transition: translate 900ms var(--ease-turn);
 }
 
 .record[data-mirror] .sleeve {
@@ -76,6 +80,23 @@
   transform: rotateY(180deg);
 }
 
+/*
+ * No lado B o disco troca de lado: a capa anda até a outra ponta da caixa e o
+ * disco passa por trás dela, saindo pelo lado oposto já virado no selo B.
+ */
+:global([data-records]:has(input[value='b']:checked)) .record[data-sided] {
+  --out: calc(-1 * var(--dir));
+}
+
+:global([data-records]:has(input[value='b']:checked)) .record[data-sided] .sleeve {
+  translate: calc(var(--dir) * (var(--reach) - 1) * 100%);
+}
+
+/* Do left do lado A (99% - 94% / reach) ao do lado oposto (1%), em unidades da caixa. */
+:global([data-records]:has(input[value='b']:checked)) .record[data-sided] .disc {
+  translate: calc(var(--dir) * (94cqi / var(--reach) - 98cqi));
+}
+
 /* ---------- Disco ---------- */
 
 .disc {
@@ -85,6 +106,7 @@
   height: 94%;
   aspect-ratio: 1;
   perspective: 1800px;
+  transition: translate 900ms var(--ease-turn);
 }
 
 .record[data-mirror] .disc {
@@ -162,9 +184,16 @@
   transform: translateY(-52%);
 }
 
-.record[data-mirror] .sealLetter {
+.record[data-mirror] .sealLetter,
+.face[data-reverse] .sealLetter {
   right: auto;
   left: 13%;
+}
+
+/* O selo B aparece do lado oposto ao A. */
+.record[data-mirror] .face[data-reverse] .sealLetter {
+  left: auto;
+  right: 13%;
 }
 
 /* ---------- Entrada ---------- */
@@ -177,7 +206,7 @@
 
 @keyframes slide {
   from {
-    transform: translateX(calc(var(--dir) * -54%));
+    transform: translateX(calc(var(--out) * -54%));
   }
 }
 
