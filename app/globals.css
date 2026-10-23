@@ -319,6 +319,22 @@ a:focus-visible > .arrow[data-diagonal] {
   color: var(--on-red);
 }
 
+/* ---------- Revelação ao rolar ---------- */
+
+/* O estado de espera só existe quando o script de components/ScrollReveal o aplica. */
+@media screen {
+  [data-reveal-state='wait'] {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+[data-reveal-state='in'] {
+  transition:
+    opacity 700ms var(--ease-out) var(--reveal-delay, 0ms),
+    transform 900ms var(--ease-out) var(--reveal-delay, 0ms);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

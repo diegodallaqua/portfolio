@@ -25,7 +25,7 @@ export function Discography({ locale, heading: Heading, intro, id }: Props) {
 
   return (
     <section id={id} className={`page ${s.section}`} aria-labelledby="discos-titulo" data-records>
-      <div className={s.head}>
+      <div className={s.head} data-reveal>
         <Heading id="discos-titulo" className={`cover-type ${Heading === 'h1' ? s.titleLarge : s.title}`}>
           {t.home.projectsTitle}
         </Heading>
@@ -55,7 +55,7 @@ export function Discography({ locale, heading: Heading, intro, id }: Props) {
           const href = routes.project(locale, project.slug)
           const titleId = `disco-${project.slug}`
           return (
-            <li key={project.slug} className={s.item} data-mirror={i % 2 === 1 || undefined}>
+            <li key={project.slug} className={s.item} data-mirror={i % 2 === 1 || undefined} data-reveal>
               <article className={s.row} aria-labelledby={titleId}>
                 <Record
                   className={s.record}

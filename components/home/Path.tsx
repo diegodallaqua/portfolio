@@ -12,7 +12,7 @@ export function Path({ locale }: { locale: Locale }) {
 
   return (
     <section id={sectionId.path[locale]} className={`page ${s.section}`} aria-labelledby="trajetoria-titulo">
-      <div className={s.head}>
+      <div className={s.head} data-reveal>
         <h2 id="trajetoria-titulo" className={`cover-type ${s.title}`}>
           {t.pathTitle}
         </h2>
@@ -26,7 +26,7 @@ export function Path({ locale }: { locale: Locale }) {
         {timeline.map((entry, i) => {
           const state = !entry.text ? 'pending' : i === last ? 'now' : 'done'
           return (
-            <li key={entry.id} className={s.entry} data-state={state}>
+            <li key={entry.id} className={s.entry} data-state={state} data-reveal>
               <h3 className={s.label}>
                 {entry.label[locale]}
                 {state === 'now' && <span className={s.now}>{t.now}</span>}

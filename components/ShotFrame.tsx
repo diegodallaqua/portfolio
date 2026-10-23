@@ -9,6 +9,8 @@ type Props = {
   project: Project
   locale: Locale
   sizes: string
+  /** Aparece sozinha ao rolar (no encarte; no lado A quem aparece é o bloco). */
+  reveal?: boolean
   className?: string
 }
 
@@ -22,14 +24,14 @@ const FOLD = { desktop: 16 / 10, mobile: 390 / 844 }
  * A captura vai sem otimização: o PNG original mantém o texto nítido, que a
  * recompressão em AVIF/WebP borrava.
  */
-export function ShotFrame({ shot, project, locale, sizes, className = '' }: Props) {
+export function ShotFrame({ shot, project, locale, sizes, reveal = false, className = '' }: Props) {
   const t = getDictionary(locale).project
   const caption = shot.caption[locale]
   // Capturas altas param na dobra; as mais largas que ela aparecem inteiras.
   const wide = shot.width && shot.height && shot.width / shot.height > FOLD[shot.frame]
 
   return (
-    <figure className={`${s.figure} ${className}`} data-frame={shot.frame}>
+    <figure className={`${s.figure} ${className}`} data-frame={shot.frame} data-reveal={reveal || undefined}>
       <div className={s.plate} style={wide ? { aspectRatio: `${shot.width} / ${shot.height}` } : undefined}>
         {shot.src && shot.width && shot.height ? (
           <Image

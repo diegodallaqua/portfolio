@@ -9,7 +9,7 @@ export function Stack({ locale }: { locale: Locale }) {
 
   return (
     <section id="stack" className={`page ${s.section}`} aria-labelledby="stack-titulo">
-      <div className={s.head}>
+      <div className={s.head} data-reveal>
         <h2 id="stack-titulo" className={`cover-type ${s.title}`}>
           {t.stackTitle}
         </h2>
@@ -18,7 +18,7 @@ export function Stack({ locale }: { locale: Locale }) {
 
       <div className={s.groups}>
         {stackMatrix.map((group) => (
-          <table key={group.id} className={s.table}>
+          <table key={group.id} className={s.table} data-reveal>
             <caption className={s.caption}>{group.title[locale]}</caption>
             <thead>
               <tr>

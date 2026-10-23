@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n'
 import { getDictionary } from '@/content/dictionary'
 import { Header, type Section } from './Header'
 import { Footer } from './Footer'
+import { ScrollReveal } from './ScrollReveal'
 
 type Props = {
   locale: Locale
@@ -25,6 +26,7 @@ export function SiteShell({ locale, alternate, current, children }: Props) {
         {children}
       </main>
       <Footer locale={locale} alternate={alternate} />
+      <ScrollReveal />
     </>
   )
 }

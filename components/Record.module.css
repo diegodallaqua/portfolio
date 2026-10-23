@@ -185,3 +185,8 @@
   animation: slide 1400ms var(--ease-out) 200ms both;
 }
 
+/* Abaixo da dobra, o disco sai da capa quando a linha aparece ao rolar. */
+:global([data-reveal-state='in']) .disc {
+  animation: slide 1400ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 200ms) both;
+}
+

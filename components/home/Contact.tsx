@@ -10,7 +10,7 @@ export function Contact({ locale }: { locale: Locale }) {
 
   return (
     <section id={sectionId.contact[locale]} className="page" aria-labelledby="contato-titulo">
-      <div className={s.panel}>
+      <div className={s.panel} data-reveal>
         <div className={s.text}>
           <h2 id="contato-titulo" className={`cover-type ${s.title}`}>
             {t.contactTitle}

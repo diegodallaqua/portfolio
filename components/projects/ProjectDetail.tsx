@@ -74,7 +74,7 @@ export function ProjectDetail({ project, locale }: { project: Project; locale: L
       </SideSection>
 
       <section id="capturas" className={`page ${s.shots}`} aria-labelledby="capturas-titulo">
-        <h2 id="capturas-titulo" className={`cover-type ${s.sectionTitle}`}>
+        <h2 id="capturas-titulo" className={`cover-type ${s.sectionTitle}`} data-reveal>
           {p.shots}
         </h2>
         <div className={s.gallery}>
@@ -86,13 +86,14 @@ export function ProjectDetail({ project, locale }: { project: Project; locale: L
               project={project}
               locale={locale}
               sizes={shot.frame === 'desktop' ? '(min-width: 1080px) 760px, 100vw' : '300px'}
+              reveal
             />
           ))}
         </div>
       </section>
 
       {project.notes[locale].length > 0 && (
-        <section className={`page ${s.notes}`} aria-labelledby="notas">
+        <section className={`page ${s.notes}`} aria-labelledby="notas" data-reveal>
           <h2 id="notas" className={s.notesTitle}>
             {p.notes}
           </h2>
@@ -104,7 +105,7 @@ export function ProjectDetail({ project, locale }: { project: Project; locale: L
         </section>
       )}
 
-      <nav className={`page ${s.next}`} aria-label={p.next}>
+      <nav className={`page ${s.next}`} aria-label={p.next} data-reveal>
         <Link className={s.nextLink} href={routes.project(locale, next.slug)}>
           <span className="visually-hidden">{p.next}: </span>
           <span className={`cover-type ${s.nextName}`}>{next.name}</span>
@@ -159,7 +160,7 @@ function SideSection({
   const titleId = `${id}-titulo`
   return (
     <section id={id} className={`page ${s.side}`} aria-labelledby={titleId}>
-      <div className={s.sideHead}>
+      <div className={s.sideHead} data-reveal>
         <h2 id={titleId} className={`cover-type ${s.sectionTitle}`}>
           {name}
         </h2>
@@ -172,7 +173,7 @@ function SideSection({
         </ul>
       </div>
       <div className={s.sideBody}>
-        <ol className={s.tracks}>
+        <ol className={s.tracks} data-reveal>
           {side.highlights[locale].map((item, i) => (
             <li key={item}>
               <span className={s.trackNo} aria-hidden="true">
@@ -183,7 +184,9 @@ function SideSection({
             </li>
           ))}
         </ol>
-        <div className={s.sideMedia}>{children}</div>
+        <div className={s.sideMedia} data-reveal>
+          {children}
+        </div>
       </div>
     </section>
   )
