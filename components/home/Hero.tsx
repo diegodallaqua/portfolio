@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { routes, sectionId, type Locale } from '@/lib/i18n'
 import { getDictionary } from '@/content/dictionary'
@@ -5,9 +6,10 @@ import { profile } from '@/content/profile'
 import { projects } from '@/content/projects'
 import { Record } from '../Record'
 import { Arrow } from '../Icons'
+import coverArt from '@/public/images/curto-circuito.webp'
 import s from './Hero.module.css'
 
-/** O disco do próprio Diego: capa tipográfica e, no verso, a lista de faixas com os projetos. */
+/** O disco do próprio Diego: arte Curto-circuito e os projetos como lista de faixas. */
 export function Hero({ locale }: { locale: Locale }) {
   const h = getDictionary(locale).home
 
@@ -18,6 +20,15 @@ export function Hero({ locale }: { locale: Locale }) {
         entrance="load"
         front={
           <div className={s.cover}>
+            <Image
+              src={coverArt}
+              alt=""
+              fill
+              preload
+              placeholder="blur"
+              sizes="(min-width: 1080px) 544px, (min-width: 720px) 80vw, 82vw"
+              className={s.artwork}
+            />
             <h1 id="capa-titulo" className={s.coverTitle}>
               <span className={s.coverName}>{profile.name.toLowerCase()}</span>
               <span className="visually-hidden">: </span>

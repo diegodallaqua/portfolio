@@ -8,38 +8,26 @@
 
 .photo {
   position: relative;
+  display: grid;
+  place-items: center;
   overflow: hidden;
   background: #0c0c0c;
 }
 
-.image {
-  object-fit: cover;
-  transition: filter 600ms var(--ease-out);
+/* Caixa comum às três marcas: as largas param na largura, as altas na altura. */
+.mark {
+  width: 64cqi;
+  height: 46cqi;
+  object-fit: contain;
 }
 
-.image[data-mono] {
-  filter: var(--shot-filter);
-}
-
-.empty {
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: 5cqi;
+/* Fora do grid: a altura da imagem acompanha a da área, e o recorte obedece ao object-position. */
+.bleed {
+  position: absolute;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  color: #f2f1ed;
-}
-
-.logo {
-  width: 42cqi;
-  height: auto;
-}
-
-.pending {
-  padding: 0.4em 1em;
-  border: 1px dashed rgba(242, 241, 237, 0.5);
-  border-radius: 999px;
-  font-size: clamp(0.75rem, 2.6cqi, 0.9375rem);
+  object-fit: cover;
 }
 
 .band {

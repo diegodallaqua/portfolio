@@ -18,7 +18,6 @@
   --groove: #1b1b1b;
   --sheen: rgba(255, 255, 255, 0.1);
   --shadow: 0 1px 2px rgba(18, 18, 18, 0.08), 0 18px 40px -22px rgba(18, 18, 18, 0.45);
-  --shot-filter: grayscale(1) contrast(1.22);
 
   --font-sans: var(--font-jost), 'Futura', 'Century Gothic', Arial, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, Consolas, monospace;
@@ -68,7 +67,6 @@
     --groove: #161616;
     --sheen: rgba(255, 255, 255, 0.12);
     --shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 28px 56px -24px rgba(0, 0, 0, 0.95);
-    --shot-filter: grayscale(1) contrast(1.18) brightness(0.92);
     color-scheme: dark;
   }
 }
@@ -87,7 +85,6 @@
   --groove: #161616;
   --sheen: rgba(255, 255, 255, 0.12);
   --shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 28px 56px -24px rgba(0, 0, 0, 0.95);
-  --shot-filter: grayscale(1) contrast(1.18) brightness(0.92);
   color-scheme: dark;
 }
 

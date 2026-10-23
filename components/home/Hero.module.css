@@ -12,8 +12,17 @@
 
 .cover {
   position: relative;
+  isolation: isolate;
   height: 100%;
   padding: 7cqi;
+  background: #05080d;
+  color: #ffffff;
+}
+
+.artwork {
+  z-index: -1;
+  object-fit: cover;
+  pointer-events: none;
 }
 
 .coverTitle {

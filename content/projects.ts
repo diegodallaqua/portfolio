@@ -14,11 +14,6 @@ export type Shot = {
   width?: number
   height?: number
   alt?: Localized
-  /**
-   * Recorte na capa do disco: ponto de foco (object-position) e aproximação.
-   * Padrão: topo centralizado, sem aproximação.
-   */
-  cover?: { focus: string; zoom?: number }
 }
 
 export type Side = {
@@ -55,6 +50,12 @@ export type Project = {
   /** Observação honesta sobre o estado do projeto (dados de teste, licença...). */
   notes: Localized<string[]>
   logo?: { src: string; width: number; height: number }
+  /**
+   * Marca impressa na capa do disco. `bleed: true` é uma arte com fundo
+   * próprio, que ocupa a área inteira da capa em vez de ficar centralizada;
+   * `focus` é o object-position do recorte (padrão: centro).
+   */
+  mark: { src: string; width: number; height: number; bleed?: boolean; focus?: string }
 }
 
 const gh = (repo: string) => `https://github.com/diegodallaqua/${repo}`
@@ -157,10 +158,8 @@ Authorization: Bearer <token>
         frame: 'desktop',
         caption: { pt: 'Visão geral do estudante', en: 'Student overview' },
         src: '/projects/pontuo/dashboard-desktop.png',
-        width: 1440,
-        height: 1729,
-        // Aproxima no cartão escuro "O seu futuro se constrói".
-        cover: { focus: '49% 21%', zoom: 1.6 },
+        width: 1863,
+        height: 878,
         alt: {
           pt: 'Painel do Pontuo com simulados concluídos, aproveitamento geral, gráfico de evolução e simulados recentes.',
           en: 'Pontuo dashboard with completed exams, overall accuracy, a progress chart and recent exams.',
@@ -170,8 +169,8 @@ Authorization: Bearer <token>
         frame: 'mobile',
         caption: { pt: 'Visão geral no celular', en: 'Overview on mobile' },
         src: '/projects/pontuo/dashboard-mobile.png',
-        width: 390,
-        height: 2236,
+        width: 396,
+        height: 791,
         alt: {
           pt: 'Painel do Pontuo em tela de celular.',
           en: 'Pontuo dashboard on a phone screen.',
@@ -192,8 +191,8 @@ Authorization: Bearer <token>
         frame: 'mobile',
         caption: { pt: 'Entrada no celular', en: 'Sign-in on mobile' },
         src: '/projects/pontuo/login-mobile.png',
-        width: 390,
-        height: 844,
+        width: 397,
+        height: 789,
         alt: {
           pt: 'Tela de login do Pontuo em celular.',
           en: 'Pontuo sign-in screen on a phone.',
@@ -204,6 +203,8 @@ Authorization: Bearer <token>
       pt: ['Capturas geradas pelos testes de navegador, com dados de teste.', 'API sob licença MIT.'],
       en: ['Captures produced by the browser tests, with test data.', 'API released under the MIT license.'],
     },
+    // Recorte puxado para baixo: o "P" sobe e fica no centro óptico da capa.
+    mark: { src: '/projects/pontuo/alter-logo.png', width: 1254, height: 1254, bleed: true, focus: '50% 50%' },
   },
   {
     slug: 'rede-campo-online',
@@ -290,15 +291,57 @@ POST /images          // upload to Cloudflare R2, WebP variants`,
       },
     },
     shots: [
-      { frame: 'desktop', caption: { pt: 'Página inicial', en: 'Home page' } },
-      { frame: 'mobile', caption: { pt: 'Página inicial no celular', en: 'Home page on mobile' } },
-      { frame: 'desktop', caption: { pt: 'Painel administrativo', en: 'Admin panel' } },
+      {
+        frame: 'desktop',
+        caption: { pt: 'Página inicial', en: 'Home page' },
+        src: '/projects/rede-campo-online/home-desktop.png',
+        width: 1919,
+        height: 942,
+        alt: {
+          pt: 'Página inicial da Rede Campo com o título "Levando inovação e tecnologia até o produtor!" e o botão "Veja Nossos Projetos".',
+          en: 'Rede Campo home page with the headline "Levando inovação e tecnologia até o produtor!" and a button to the projects.',
+        },
+      },
+      {
+        frame: 'mobile',
+        caption: { pt: 'Página inicial no celular', en: 'Home page on mobile' },
+        src: '/projects/rede-campo-online/home-mobile.png',
+        width: 397,
+        height: 851,
+        alt: {
+          pt: 'Página inicial da Rede Campo em tela de celular, com menu recolhido e a seção "Sobre nós".',
+          en: 'Rede Campo home page on a phone screen, with a collapsed menu and the "Sobre nós" section.',
+        },
+      },
+      {
+        frame: 'desktop',
+        caption: { pt: 'Página sobre o grupo', en: 'About page' },
+        src: '/projects/rede-campo-online/about-us-desktop.png',
+        width: 1919,
+        height: 942,
+        alt: {
+          pt: 'Página "A Rede Campo" com a apresentação do grupo, missão, visão e valores.',
+          en: 'The "A Rede Campo" page with the group’s introduction, mission, vision and values.',
+        },
+      },
+      {
+        frame: 'mobile',
+        caption: { pt: 'Entrada no painel pelo celular', en: 'Admin sign-in on mobile' },
+        src: '/projects/rede-campo-online/login-mobile.png',
+        width: 399,
+        height: 856,
+        alt: {
+          pt: 'Tela de login do painel administrativo da Rede Campo Online em celular.',
+          en: 'Rede Campo Online admin sign-in screen on a phone.',
+        },
+      },
     ],
     notes: {
       pt: ['Repositórios públicos apenas para portfólio; não é software open source.'],
       en: ['Repositories are public for portfolio purposes only; this is not open-source software.'],
     },
     logo: { src: '/projects/rede-campo-online/logo-white.png', width: 707, height: 353 },
+    mark: { src: '/projects/rede-campo-online/mark-mono.png', width: 1041, height: 693 },
   },
   {
     slug: 'infinito-medalhas',
@@ -393,7 +436,6 @@ sanity-webhook-signature: t=…,v1=…   // HMAC, 5-minute window
         src: '/projects/infinito-medalhas/home-desktop.png',
         width: 1440,
         height: 900,
-        cover: { focus: '0% 0%' },
         alt: {
           pt: 'Página inicial da Infinito Medalhas com o título "Medalhas que ninguém deixa na gaveta" e uma medalha dourada de maratona.',
           en: 'Infinito Medalhas home page with a gold marathon medal beside the headline.',
@@ -433,6 +475,7 @@ sanity-webhook-signature: t=…,v1=…   // HMAC, 5-minute window
       ],
     },
     logo: { src: '/projects/infinito-medalhas/icon.svg', width: 64, height: 64 },
+    mark: { src: '/projects/infinito-medalhas/mark-mono.svg', width: 558, height: 878 },
   },
 ]
 

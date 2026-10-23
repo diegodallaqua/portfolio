@@ -7,7 +7,7 @@ import { Record } from '../Record'
 import { CodeView } from '../CodeView'
 import { ShotFrame } from '../ShotFrame'
 import { Arrow, GitHubIcon, LockIcon } from '../Icons'
-import { ShotCover } from './Covers'
+import { LogoCover } from './Covers'
 import s from './ProjectDetail.module.css'
 
 /** Um disco aberto: capa, os dois lados com suas faixas, o encarte de capturas e as notas. */
@@ -27,7 +27,7 @@ export function ProjectDetail({ project, locale }: { project: Project; locale: L
         <Record
           className={s.record}
           entrance="load"
-          front={<ShotCover project={project} locale={locale} color priority sizes="(min-width: 1080px) 560px, 84vw" />}
+          front={<LogoCover project={project} priority />}
         />
         <div className={s.intro}>
           <h1 id="titulo" className={`cover-type ${s.title}`}>

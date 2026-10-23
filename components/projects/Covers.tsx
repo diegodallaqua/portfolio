@@ -1,57 +1,27 @@
 import Image from 'next/image'
 import type { Locale } from '@/lib/i18n'
 import type { Project } from '@/content/projects'
-import { getDictionary } from '@/content/dictionary'
 import { CodeView } from '../CodeView'
 import s from './Covers.module.css'
 
-type ShotProps = {
-  project: Project
-  locale: Locale
-  /** Mostra a captura em cores desde o início (página do projeto). */
-  color?: boolean
-  priority?: boolean
-  sizes: string
-}
-
-/** Lado A: a tela do projeto em foto de capa, com o nome em caixa baixa e os pontos. */
-export function ShotCover({ project, locale, color = false, priority = false, sizes }: ShotProps) {
-  const t = getDictionary(locale)
-  const shot = project.shots.find((item) => item.frame === 'desktop' && item.src) ?? null
+/** Lado A: a marca do projeto, com o nome em caixa baixa e os pontos. */
+export function LogoCover({ project, priority = false }: { project: Project; priority?: boolean }) {
+  const { mark } = project
 
   return (
     <div className={s.cover}>
       <div className={s.photo}>
-        {shot?.src ? (
-          <Image
-            src={shot.src}
-            alt={shot.alt?.[locale] ?? shot.caption[locale]}
-            fill
-            sizes={sizes}
-            preload={priority}
-            data-mono={color ? undefined : true}
-            className={s.image}
-            style={{
-              objectPosition: shot.cover?.focus ?? '50% 0%',
-              transform: shot.cover?.zoom ? `scale(${shot.cover.zoom})` : undefined,
-              transformOrigin: shot.cover?.focus,
-            }}
-          />
-        ) : (
-          <div className={s.empty}>
-            {project.logo && (
-              <Image
-                src={project.logo.src}
-                alt=""
-                width={project.logo.width}
-                height={project.logo.height}
-                className={s.logo}
-                sizes="240px"
-              />
-            )}
-            <span className={s.pending}>{t.project.pendingShot}</span>
-          </div>
-        )}
+        <Image
+          src={mark.src}
+          alt=""
+          width={mark.width}
+          height={mark.height}
+          // O arquivo já sai no tamanho final; a recompressão só borraria a borda.
+          unoptimized
+          preload={priority}
+          className={mark.bleed ? s.bleed : s.mark}
+          style={mark.focus ? { objectPosition: mark.focus } : undefined}
+        />
       </div>
       <div className={s.band}>
         <span className={`cover-type ${s.title}`}>{project.name}</span>

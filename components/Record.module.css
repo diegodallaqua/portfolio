@@ -167,12 +167,6 @@
   left: 13%;
 }
 
-/* A captura em preto e branco ganha cor quando o disco toca. */
-.record:hover :global(img[data-mono]),
-.record:focus-within :global(img[data-mono]) {
-  filter: none;
-}
-
 /* ---------- Entrada ---------- */
 
 @keyframes spin {

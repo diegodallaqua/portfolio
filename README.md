@@ -88,6 +88,8 @@ O lado "API" de cada projeto mostra uma requisição e resposta reais, tiradas d
 
 Mundo "Lado A, Lado B", das capas da gravadora Elenco: cada projeto é um LP, com a interface no Lado A e a API no Lado B. Capas brancas (pretas no tema escuro), disco de vinil saindo da capa com selo vermelho `#D42A1F`, e pontos vermelhos como único ornamento. Tipografia: Jost em caixa baixa e negrito nos títulos de capa, Jost no texto, JetBrains Mono só em código de verdade. As capturas ficam em preto e branco nas capas e ganham cor ao passar o mouse e na página do projeto. Os tokens (cores dos dois temas, tipografia e espaçamento) ficam em `app/globals.css`.
 
+A capa inicial usa a arte original **Curto-circuito**, inspirada em capas de rock: uma ilustração gráfica de dois cabos ligados por um raio, com formas planas e textura de serigrafia em preto, azul, vermelho e branco. A imagem fica em `public/images/curto-circuito.webp`; o nome e “Ponta a ponta.” / “End to End.” são textos HTML brancos sobre a arte nos dois temas. O [prompt de edição](docs/curto-circuito.md) está documentado para futuras variações.
+
 Tema claro e escuro: o botão ao lado do idioma alterna e guarda a escolha no `localStorage`; sem escolha, o site segue `prefers-color-scheme`. Um script curto no `<head>` aplica o tema antes da pintura.
 
 O seletor Lado A ⇄ Lado B vira todos os discos da seção ao mesmo tempo e troca cada capa pela requisição real da API. Funciona só com CSS (`:has()` sobre botões de rádio), sem JavaScript no cliente.

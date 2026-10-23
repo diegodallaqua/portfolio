@@ -4,7 +4,7 @@ import { getDictionary } from '@/content/dictionary'
 import { projects } from '@/content/projects'
 import { Record } from '../Record'
 import { Arrow } from '../Icons'
-import { ApiCover, ShotCover } from './Covers'
+import { ApiCover, LogoCover } from './Covers'
 import s from './Discography.module.css'
 
 type Props = {
@@ -60,14 +60,7 @@ export function Discography({ locale, heading: Heading, intro, id }: Props) {
                 <Record
                   className={s.record}
                   mirror={i % 2 === 1}
-                  front={
-                    <ShotCover
-                      project={project}
-                      locale={locale}
-                      sizes="(min-width: 1080px) 520px, 84vw"
-                      priority={i === 0 && Heading === 'h1'}
-                    />
-                  }
+                  front={<LogoCover project={project} priority={i === 0 && Heading === 'h1'} />}
                   back={<ApiCover project={project} locale={locale} />}
                 />
                 <div className={s.info}>
