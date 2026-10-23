@@ -1,11 +1,10 @@
-import { getProject, projects } from '@/content/projects'
-import { ogSize, renderOg } from '@/lib/og'
+import { ogSize, renderProjectOg } from '@/lib/og'
+import { projectStaticParams } from '@/lib/pages'
 
 export const size = ogSize
 export const contentType = 'image/png'
-export const generateStaticParams = () => projects.map((project) => ({ slug: project.slug }))
+export const generateStaticParams = projectStaticParams
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
-  const project = getProject((await params).slug)!
-  return renderOg({ title: project.name, subtitle: project.kind.en })
+  return renderProjectOg('en', (await params).slug)
 }

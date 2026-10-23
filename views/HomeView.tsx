@@ -1,4 +1,4 @@
-import { routes, siteUrl, type Locale } from '@/lib/i18n'
+import { otherLocale, routes, sectionId, siteUrl, type Locale } from '@/lib/i18n'
 import { getDictionary } from '@/content/dictionary'
 import { profile } from '@/content/profile'
 import { projects } from '@/content/projects'
@@ -11,7 +11,6 @@ import { Discography } from '@/components/projects/Discography'
 
 export function HomeView({ locale }: { locale: Locale }) {
   const t = getDictionary(locale).home
-  const other: Locale = locale === 'pt' ? 'en' : 'pt'
   const person = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -31,13 +30,13 @@ export function HomeView({ locale }: { locale: Locale }) {
   }
 
   return (
-    <SiteShell locale={locale} alternate={routes.home(other)} current="home">
+    <SiteShell locale={locale} alternate={routes.home(otherLocale(locale))} current="home">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(person).replace(/</g, '\\u003c') }}
       />
       <Hero locale={locale} />
-      <Discography locale={locale} heading="h2" intro={t.projectsIntro} id={locale === 'pt' ? 'projetos' : 'projects'} />
+      <Discography locale={locale} heading="h2" intro={t.projectsIntro} id={sectionId.projects[locale]} />
       <Path locale={locale} />
       <Stack locale={locale} />
       <Contact locale={locale} />

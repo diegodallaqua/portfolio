@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { routes, type Locale } from '@/lib/i18n'
+import { htmlLang, otherLocale, routes, type Locale } from '@/lib/i18n'
 import { getDictionary } from '@/content/dictionary'
 import { profile } from '@/content/profile'
 import { ThemeToggle } from './ThemeToggle'
@@ -11,8 +11,8 @@ type Props = { locale: Locale; alternate: string; current?: Section }
 
 export function Header({ locale, alternate, current }: Props) {
   const t = getDictionary(locale)
-  const other: Locale = locale === 'pt' ? 'en' : 'pt'
-  const otherLang = other === 'pt' ? 'pt-BR' : 'en'
+  const other = otherLocale(locale)
+  const otherLang = htmlLang[other]
 
   return (
     <header className={`page ${s.header}`}>

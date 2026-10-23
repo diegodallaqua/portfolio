@@ -1,4 +1,4 @@
-import type { Locale } from '@/lib/i18n'
+import { htmlLang, otherLocale, type Locale } from '@/lib/i18n'
 import { getDictionary } from '@/content/dictionary'
 import { profile } from '@/content/profile'
 import { Arrow, GitHubIcon, LinkedInIcon } from './Icons'
@@ -6,8 +6,7 @@ import s from './Footer.module.css'
 
 export function Footer({ locale, alternate }: { locale: Locale; alternate: string }) {
   const t = getDictionary(locale)
-  const other: Locale = locale === 'pt' ? 'en' : 'pt'
-  const otherLang = other === 'pt' ? 'pt-BR' : 'en'
+  const otherLang = htmlLang[otherLocale(locale)]
 
   return (
     <footer className={`page ${s.footer}`}>

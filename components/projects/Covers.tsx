@@ -2,6 +2,7 @@ import Image from 'next/image'
 import type { Locale } from '@/lib/i18n'
 import type { Project } from '@/content/projects'
 import { CodeView } from '../CodeView'
+import { Dots } from '../Icons'
 import s from './Covers.module.css'
 
 /** Lado A: a marca do projeto, com o nome em caixa baixa e os pontos. */
@@ -25,11 +26,7 @@ export function LogoCover({ project, priority = false }: { project: Project; pri
       </div>
       <div className={s.band}>
         <span className={`cover-type ${s.title}`}>{project.name}</span>
-        <span className={`dots ${s.dots}`} aria-hidden="true">
-          <i />
-          <i />
-          <i />
-        </span>
+        <Dots className={s.dots} />
       </div>
     </div>
   )

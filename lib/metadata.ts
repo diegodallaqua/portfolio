@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ogLocale, siteUrl, type Locale } from './i18n'
+import { ogLocale, otherLocale, siteUrl, type Locale } from './i18n'
 import { profile } from '@/content/profile'
 
 type PageMeta = {
@@ -27,7 +27,7 @@ export function pageMetadata({ locale, title, description, paths }: PageMeta): M
       description,
       siteName: profile.name,
       locale: ogLocale[locale],
-      alternateLocale: ogLocale[locale === 'pt' ? 'en' : 'pt'],
+      alternateLocale: ogLocale[otherLocale(locale)],
     },
     twitter: { card: 'summary_large_image', title, description },
   }

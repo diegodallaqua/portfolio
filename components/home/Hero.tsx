@@ -5,7 +5,7 @@ import { getDictionary } from '@/content/dictionary'
 import { profile } from '@/content/profile'
 import { projects } from '@/content/projects'
 import { Record } from '../Record'
-import { Arrow } from '../Icons'
+import { Arrow, Dots } from '../Icons'
 import coverArt from '@/public/images/curto-circuito.webp'
 import s from './Hero.module.css'
 
@@ -38,11 +38,7 @@ export function Hero({ locale }: { locale: Locale }) {
                 {h.cover.tail}
               </span>
             </h1>
-            <span className={`dots ${s.dots}`} aria-hidden="true">
-              <i />
-              <i />
-              <i />
-            </span>
+            <Dots className={s.dots} />
           </div>
         }
       />

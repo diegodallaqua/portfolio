@@ -1,7 +1,7 @@
 import { sectionId, type Locale } from '@/lib/i18n'
 import { getDictionary } from '@/content/dictionary'
 import { profile } from '@/content/profile'
-import { Arrow, GitHubIcon, LinkedInIcon } from '../Icons'
+import { Arrow, Dots, GitHubIcon, LinkedInIcon } from '../Icons'
 import s from './Contact.module.css'
 
 /** Fim do disco: o endereço impresso na contracapa, em tinta cheia. */
@@ -42,11 +42,7 @@ export function Contact({ locale }: { locale: Locale }) {
           <p className={s.where}>{profile.location[locale]}</p>
         </div>
 
-        <span className={`dots ${s.dots}`} aria-hidden="true">
-          <i />
-          <i />
-          <i />
-        </span>
+        <Dots className={s.dots} />
       </div>
     </section>
   )

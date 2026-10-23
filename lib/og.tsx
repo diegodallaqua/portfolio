@@ -1,7 +1,10 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { ImageResponse } from 'next/og'
+import type { Locale } from './i18n'
+import { getDictionary } from '@/content/dictionary'
 import { profile } from '@/content/profile'
+import { getProject } from '@/content/projects'
 
 export const ogSize = { width: 1200, height: 630 }
 
@@ -114,4 +117,17 @@ export async function renderOg({ title, subtitle }: Og) {
       ],
     },
   )
+}
+
+/** Imagens compartilhadas pelas rotas dos dois idiomas. */
+export const homeOgAlt = (locale: Locale) => `${profile.name}, ${profile.role[locale]}`
+
+export function renderHomeOg(locale: Locale) {
+  const { cover } = getDictionary(locale).home
+  return renderOg({ title: `${cover.lead} ${cover.tail}`, subtitle: profile.role[locale] })
+}
+
+export function renderProjectOg(locale: Locale, slug: string) {
+  const project = getProject(slug)!
+  return renderOg({ title: project.name, subtitle: project.kind[locale] })
 }

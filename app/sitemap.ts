@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { routes, siteUrl } from '@/lib/i18n'
+import { locales, routes, siteUrl } from '@/lib/i18n'
 import { projects } from '@/content/projects'
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
 
   return pages.flatMap((page) =>
-    (['pt', 'en'] as const).map((locale) => ({
+    locales.map((locale) => ({
       url: `${siteUrl}${page[locale]}`,
       alternates: { languages: { 'pt-BR': `${siteUrl}${page.pt}`, en: `${siteUrl}${page.en}` } },
     })),

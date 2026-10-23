@@ -52,7 +52,7 @@ function line(raw: string, key: string): ReactNode {
     return <span className={s.status}>{body}</span>
   }
   const header = body.match(HEADER)
-  if (header && !body.trimStart().startsWith('{') && !body.trimStart().startsWith('"')) {
+  if (header) {
     return (
       <>
         <span className={s.header}>{header[1]}</span>
